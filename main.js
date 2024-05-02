@@ -1,14 +1,25 @@
 import { generateReturnsArray } from "./src/investmentGoals";
+import { Chart } from "chart.js/auto";
 
+const finalMoneyChart = document.getElementById("final-money-distribution");
+const progressionChart = document.getElementById("progression");
 // const calculateButton = document.getElementById("calculate-results");
- const clearFormButton = document.getElementById("clear-form");
+const clearFormButton = document.getElementById("clear-form");
 const form = document.getElementById("investiment-form");
 
+let doughnutChartReference = {};
+let progressionChartReference = {};
+
+function formatCurrency(value) {
+  return value.toFixed(2);
+}
 function renderProgression(event) {
   event.preventDefault();
-  if(document.querySelector('.error')){
+  if (document.querySelector(".error")) {
     return;
   }
+  resetCharts();
+
   // const startingAmount = Number(form['startingAmount'].value) = pelo name do input;
   const startingAmount = Number(
     document.getElementById("starting-amount").value.replace(",", ".")
@@ -34,20 +45,93 @@ function renderProgression(event) {
     returnRate,
     returnRatePeriod
   );
-  console.log(returnsArray);
+
+  const finalObject = returnsArray[returnsArray.length - 1];
+
+  doughnutChartReference = new Chart(finalMoneyChart, {
+    type: "doughnut",
+    data: {
+      labels: ["Total investido", "Rendimento", "Imposto"],
+      datasets: [
+        {
+          data: [
+            formatCurrency(finalObject.investedAmount),
+            formatCurrency(
+              finalObject.totalInterestReturns * (1 - taxRate / 100)
+            ),
+            formatCurrency(finalObject.totalInterestReturns * (taxRate / 100)),
+          ],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+  });
+  progressionChartReference = new Chart(progressionChart, {
+    type: "bar",
+    data: {
+      labels: returnsArray.map((investimentObject) => investimentObject.month),
+      datasets: [
+        {
+          label: "Total Investido",
+          data: returnsArray.map((investimentObject) =>
+            formatCurrency(investimentObject.investedAmount)
+          ),
+          backgroundColor: "rgb(255, 99, 132)",
+        },
+        {
+          label: "Retorno de Investimento",
+          data: returnsArray.map((investimentObject) =>
+            formatCurrency(investimentObject.interestReturns)
+          ),
+          backgroundColor: "rgb(54, 162, 235)",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
+    },
+  });
 }
 
-function clearForm(){
-  form['starting-amount'].value ="";
-  form['additional-contribution'].value ="";
-  form['time-amount'].value ="";
-  form['return-rate'].value ="";
-  form['tax-rate'].value ="";
+function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+function resetCharts() {
+  if (
+    !isObjectEmpty(doughnutChartReference) &&
+    !isObjectEmpty(progressionChartReference)
+  ) {
+    doughnutChartReference.destroy();
+    progressionChartReference.destroy();
+  }
+}
 
-  const errorInputContainers = document.querySelectorAll('.error');
-  for(const errorInputContainer of errorInputContainers){
-    errorInputContainer.classList.remove('error');
-    errorInputContainer.parentElement.querySelector('span').remove();
+function clearForm() {
+  form["starting-amount"].value = "";
+  form["additional-contribution"].value = "";
+  form["time-amount"].value = "";
+  form["return-rate"].value = "";
+  form["tax-rate"].value = "";
+
+  resetCharts();
+
+  const errorInputContainers = document.querySelectorAll(".error");
+  for (const errorInputContainer of errorInputContainers) {
+    errorInputContainer.classList.remove("error");
+    errorInputContainer.parentElement.querySelector("span").remove();
   }
 }
 function validateInput(event) {
@@ -59,7 +143,8 @@ function validateInput(event) {
   const grandParent = event.target.parentElement.parentElement;
   const inputValue = event.target.value.replace(",", ".");
 
-  if (!parentElement.classList.contains("error") &&
+  if (
+    !parentElement.classList.contains("error") &&
     (isNaN(inputValue) || Number(inputValue) <= 0)
   ) {
     const errorTextElement = document.createElement("span");
@@ -68,7 +153,8 @@ function validateInput(event) {
 
     parentElement.classList.add("error");
     grandParent.appendChild(errorTextElement);
-  } else if (parentElement.classList.contains("error") &&
+  } else if (
+    parentElement.classList.contains("error") &&
     (!isNaN(inputValue) || !Number(inputValue) <= 0)
   ) {
     parentElement.classList.remove("error");
@@ -84,4 +170,4 @@ for (const formElement of form) {
 
 form.addEventListener("submit", renderProgression);
 // calculateButton.addEventListener('click', renderProgression)
-clearFormButton.addEventListener('click', clearForm)
+clearFormButton.addEventListener("click", clearForm);
