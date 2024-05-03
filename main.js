@@ -17,27 +17,30 @@ const columnsArray = [
   {
     columnLabel: "Total investido",
     accessor: "investedAmount",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
   {
     columnLabel: "Rendimento mensal",
     accessor: "interestReturns",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
   {
     columnLabel: "Rendimento total",
     accessor: "totalInterestReturns",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
   {
     columnLabel: "Valor total",
     accessor: "totalAmount",
-    format: (numberInfo) => formatCurrency(numberInfo),
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
   },
 ];
 
-function formatCurrency(value) {
+function formatCurrencyToTable(value) {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+function formatCurrencyToGraph(value) {
+  return value.toFixed(2);
 }
 function renderProgression(event) {
   event.preventDefault();
@@ -72,64 +75,64 @@ function renderProgression(event) {
     returnRatePeriod
   );
 
-  // const finalObject = returnsArray[returnsArray.length - 1];
+  const finalObject = returnsArray[returnsArray.length - 1];
 
-  // doughnutChartReference = new Chart(finalMoneyChart, {
-  //   type: "doughnut",
-  //   data: {
-  //     labels: ["Total investido", "Rendimento", "Imposto"],
-  //     datasets: [
-  //       {
-  //         data: [
-  //           formatCurrency(finalObject.investedAmount),
-  //           formatCurrency(
-  //             finalObject.totalInterestReturns * (1 - taxRate / 100)
-  //           ),
-  //           formatCurrency(finalObject.totalInterestReturns * (taxRate / 100)),
-  //         ],
-  //         backgroundColor: [
-  //           "rgb(255, 99, 132)",
-  //           "rgb(54, 162, 235)",
-  //           "rgb(255, 205, 86)",
-  //         ],
-  //         hoverOffset: 4,
-  //       },
-  //     ],
-  //   },
-  // });
-  // progressionChartReference = new Chart(progressionChart, {
-  //   type: "bar",
-  //   data: {
-  //     labels: returnsArray.map((investimentObject) => investimentObject.month),
-  //     datasets: [
-  //       {
-  //         label: "Total Investido",
-  //         data: returnsArray.map((investimentObject) =>
-  //           formatCurrency(investimentObject.investedAmount)
-  //         ),
-  //         backgroundColor: "rgb(255, 99, 132)",
-  //       },
-  //       {
-  //         label: "Retorno de Investimento",
-  //         data: returnsArray.map((investimentObject) =>
-  //           formatCurrency(investimentObject.interestReturns)
-  //         ),
-  //         backgroundColor: "rgb(54, 162, 235)",
-  //       },
-  //     ],
-  //   },
-  //   options: {
-  //     responsive: true,
-  //     scales: {
-  //       x: {
-  //         stacked: true,
-  //       },
-  //       y: {
-  //         stacked: true,
-  //       },
-  //     },
-  //   },
-  // });
+  doughnutChartReference = new Chart(finalMoneyChart, {
+    type: "doughnut",
+    data: {
+      labels: ["Total investido", "Rendimento", "Imposto"],
+      datasets: [
+        {
+          data: [
+            formatCurrencyToGraph(finalObject.investedAmount),
+            formatCurrencyToGraph(
+              finalObject.totalInterestReturns * (1 - taxRate / 100)
+            ),
+            formatCurrencyToGraph(finalObject.totalInterestReturns * (taxRate / 100)),
+          ],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+  });
+  progressionChartReference = new Chart(progressionChart, {
+    type: "bar",
+    data: {
+      labels: returnsArray.map((investimentObject) => investimentObject.month),
+      datasets: [
+        {
+          label: "Total Investido",
+          data: returnsArray.map((investimentObject) =>
+            formatCurrencyToGraph(investimentObject.investedAmount)
+          ),
+          backgroundColor: "rgb(255, 99, 132)",
+        },
+        {
+          label: "Retorno de Investimento",
+          data: returnsArray.map((investimentObject) =>
+            formatCurrencyToGraph(investimentObject.interestReturns)
+          ),
+          backgroundColor: "rgb(54, 162, 235)",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
+    },
+  });
 
   createTable(columnsArray, returnsArray, tableId);
 }
