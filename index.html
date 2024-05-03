@@ -8,7 +8,7 @@
   </head>
   <body class="h-[100dvh] grid grid-cols-3 grid-rows-2">
     <aside
-      class="flex flex-col items-center justify-evenly bg-emerald-300 row-span-2 border-solid border-r-4 border-gray-400 text-slate-700"
+      class="sticky top-0 flex flex-col items-center justify-evenly bg-emerald-300 row-span-2 border-solid border-r-4 border-gray-400 text-slate-700"
     >
       <h1 class="text-2xl font-bold">Calculadora de Investimentos</h1>
       <form id="investiment-form">
@@ -33,7 +33,6 @@
               required
             />
           </div>
-          
         </div>
         <!-- segundo -->
         <div class="flex w-full flex-col px-4 my-2 h-[4.25rem]">
@@ -136,13 +135,16 @@
         >
           Calcular
         </button>
-        <button id="clear-form" class="w-1/2 py-1 rounded-md hover:bg-emerald-500">
+        <button
+          id="clear-form"
+          class="w-1/2 py-1 rounded-md hover:bg-emerald-500"
+        >
           Limpar
         </button>
       </div>
     </aside>
     <main class="row-span-2 col-span-2">
-    <!-- <section id="charts-container" class="h-full">
+      <!-- <section id="charts-container" class="h-full">
       <div class="h-[36%] flex flex-col items-center pb-8">
         <p class="font-bold text-lg">Resultado Final</p>
         <canvas id="final-money-distribution"></canvas>
@@ -152,6 +154,18 @@
         <canvas id="progression"></canvas>
       </div>
     </section>       -->
+      <section id="table-container" class="h-full overflow-y-auto">
+        <p class="font-bold text-lg text-center bg-white h-7">
+          Resultados Mensais
+        </p>
+        <table
+          id="results-table"
+          class="w-full max-h-full border border-separate"
+        >
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </section>
     </main>
     <script type="module" src="./main.js"></script>
   </body>
