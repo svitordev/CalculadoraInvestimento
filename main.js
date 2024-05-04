@@ -1,16 +1,45 @@
 import { generateReturnsArray } from "./src/investmentGoals";
 import { Chart } from "chart.js/auto";
+import { createTable } from "./src/table";
 
 const finalMoneyChart = document.getElementById("final-money-distribution");
 const progressionChart = document.getElementById("progression");
 // const calculateButton = document.getElementById("calculate-results");
 const clearFormButton = document.getElementById("clear-form");
 const form = document.getElementById("investiment-form");
+const tableId = document.getElementById("results-table");
 
 let doughnutChartReference = {};
 let progressionChartReference = {};
 
-function formatCurrency(value) {
+const columnsArray = [
+  { columnLabel: "Mês", accessor: "month" },
+  {
+    columnLabel: "Total investido",
+    accessor: "investedAmount",
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+  },
+  {
+    columnLabel: "Rendimento mensal",
+    accessor: "interestReturns",
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+  },
+  {
+    columnLabel: "Rendimento total",
+    accessor: "totalInterestReturns",
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+  },
+  {
+    columnLabel: "Valor total",
+    accessor: "totalAmount",
+    format: (numberInfo) => formatCurrencyToTable(numberInfo),
+  },
+];
+
+function formatCurrencyToTable(value) {
+  return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+function formatCurrencyToGraph(value) {
   return value.toFixed(2);
 }
 function renderProgression(event) {
@@ -55,11 +84,11 @@ function renderProgression(event) {
       datasets: [
         {
           data: [
-            formatCurrency(finalObject.investedAmount),
-            formatCurrency(
+            formatCurrencyToGraph(finalObject.investedAmount),
+            formatCurrencyToGraph(
               finalObject.totalInterestReturns * (1 - taxRate / 100)
             ),
-            formatCurrency(finalObject.totalInterestReturns * (taxRate / 100)),
+            formatCurrencyToGraph(finalObject.totalInterestReturns * (taxRate / 100)),
           ],
           backgroundColor: [
             "rgb(255, 99, 132)",
@@ -79,14 +108,14 @@ function renderProgression(event) {
         {
           label: "Total Investido",
           data: returnsArray.map((investimentObject) =>
-            formatCurrency(investimentObject.investedAmount)
+            formatCurrencyToGraph(investimentObject.investedAmount)
           ),
           backgroundColor: "rgb(255, 99, 132)",
         },
         {
           label: "Retorno de Investimento",
           data: returnsArray.map((investimentObject) =>
-            formatCurrency(investimentObject.interestReturns)
+            formatCurrencyToGraph(investimentObject.interestReturns)
           ),
           backgroundColor: "rgb(54, 162, 235)",
         },
@@ -104,6 +133,8 @@ function renderProgression(event) {
       },
     },
   });
+
+  createTable(columnsArray, returnsArray, tableId);
 }
 
 function isObjectEmpty(obj) {
@@ -168,6 +199,17 @@ for (const formElement of form) {
   }
 }
 
+const mainEl = document.querySelector('main');
+const carouselEl = document.getElementById('carousel');
+const nextButton = document.getElementById('slide-arrow-next');
+const previousButton = document.getElementById('slide-arrow-previous');
+
+nextButton.addEventListener('click',()=>{
+  carouselEl.scrollLeft += mainEl.clientWidth;
+})
+previousButton.addEventListener('click',()=>{
+  carouselEl.scrollLeft -= mainEl.clientWidth;
+})
 form.addEventListener("submit", renderProgression);
 // calculateButton.addEventListener('click', renderProgression)
 clearFormButton.addEventListener("click", clearForm);
