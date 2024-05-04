@@ -131,7 +131,7 @@
           type="submit"
           form="investiment-form"
           id="calculate-results"
-          class="w-1/2 py-1 rounded-md bg-emerald-950 text-slate-200 hover:bg-emerald-800"
+          class="w-1/2 py-1 rounded-md border-2 border-slate-200 bg-emerald-950 text-slate-200 hover:bg-emerald-800"
         >
           Calcular
         </button>
@@ -143,29 +143,36 @@
         </button>
       </div>
     </aside>
-    <main class="row-span-2 col-span-2">
-      <section id="charts-container" class="h-full">
-        <div class="h-[36%] flex flex-col items-center pb-8">
-          <p class="font-bold text-lg">Resultado Final</p>
-          <canvas id="final-money-distribution"></canvas>
-        </div>
-        <div class="h-[56%] flex flex-col items-center">
-          <p class="font-bold text-lg">Progressão</p>
-          <canvas id="progression"></canvas>
-        </div>
-      </section>      
-      <section id="table-container" class="h-full overflow-y-auto">
-        <p class="font-bold text-lg text-center bg-white h-7">
-          Resultados Mensais
-        </p>
-        <table
-          id="results-table"
-          class="w-full max-h-full border border-separate"
+    <main class="row-span-2 col-span-2 relative">
+      <button class="absolute top-0 bottom-0 left-0 cursor-pointer  w-4 bg-slate-200 opacity-50 hover:opacity-100 focus:opacity-100" id="slide-arrow-previous">&#10094;</button>
+      <button class="absolute top-0 bottom-0 right-0 cursor-pointer w-4  bg-slate-200 opacity-50 hover:opacity-100 focus:opacity-100" id="slide-arrow-next">&#10095;</button>
+      <div id="carousel" class="h-full w-full flex overflow-x-auto scroll-smooth">
+        <section
+          id="charts-container"
+          class="h-full flex flex-col gap-1 items-center basis-full shrink-0"
         >
-          <thead></thead>
-          <tbody></tbody>
-        </table>
-      </section>
+          <div class="w-[34%] flex flex-col items-center">
+            <p class="font-bold text-lg">Resultado Final</p>
+            <canvas id="final-money-distribution"></canvas>
+          </div>
+          <div class="w-[85%] flex flex-col items-center">
+            <p class="font-bold text-lg">Progressão</p>
+            <canvas id="progression"></canvas>
+          </div>
+        </section>
+        <section id="table-container" class="h-full overflow-y-auto basis-full shrink-0">
+          <p class="font-bold text-lg text-center bg-white h-7">
+            Resultados Mensais
+          </p>
+          <table
+            id="results-table"
+            class="w-full max-h-full border border-separate"
+          >
+            <thead></thead>
+            <tbody></tbody>
+          </table>
+        </section>
+      </div>
     </main>
     <script type="module" src="./main.js"></script>
   </body>
