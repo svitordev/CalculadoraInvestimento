@@ -88,13 +88,11 @@ function renderProgression(event) {
             formatCurrencyToGraph(
               finalObject.totalInterestReturns * (1 - taxRate / 100)
             ),
-            formatCurrencyToGraph(finalObject.totalInterestReturns * (taxRate / 100)),
+            formatCurrencyToGraph(
+              finalObject.totalInterestReturns * (taxRate / 100)
+            ),
           ],
-          backgroundColor: [
-            "rgb(255, 99, 132)",
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
-          ],
+          backgroundColor: ["#004e92", "#093637", "#93291E"],
           hoverOffset: 4,
         },
       ],
@@ -110,14 +108,14 @@ function renderProgression(event) {
           data: returnsArray.map((investimentObject) =>
             formatCurrencyToGraph(investimentObject.investedAmount)
           ),
-          backgroundColor: "rgb(255, 99, 132)",
+          backgroundColor: "#004e92",
         },
         {
           label: "Retorno de Investimento",
           data: returnsArray.map((investimentObject) =>
             formatCurrencyToGraph(investimentObject.interestReturns)
           ),
-          backgroundColor: "rgb(54, 162, 235)",
+          backgroundColor: "#093637",
         },
       ],
     },
