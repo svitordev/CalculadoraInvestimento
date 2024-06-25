@@ -6,27 +6,29 @@
     <link rel="stylesheet" href="./style.css" />
     <title>Calculadora de Investimentos</title>
   </head>
-  <body class="h-[100dvh] grid grid-cols-3 grid-rows-2">
+  <body class="w-full flex flex-col lg:flex-row">
     <aside
-      class="sticky top-0 flex flex-col items-center justify-evenly bg-gradient row-span-2 border-solid border-r-4 border-gray-400 text-slate-200"
+      class="w-full lg:w-1/3 h-dvh  flex flex-col items-center justify-evenly bg-gradient border-solid border-r-4 border-gray-400 text-slate-200"
     >
-      <h1 class="text-2xl font-bold">Calculadora de Investimentos</h1>
-      <form id="investiment-form">
+      <h1 class="text-2xl md:text-4xl lg:text-3xl text-center font-bold">
+        Calculadora de Investimentos
+      </h1>
+      <form class="md:w-4/5" id="investiment-form">
         <!-- primeiro -->
-        <div class="flex w-full flex-col px-4 my-2 h-[4.25rem]">
+        <div class="flex w-full flex-col px-4 md:px-0  lg:px-4 my-2 h-[4.25rem]">
           <label class="font-bold" for="starting-amount"
             >Investimento inicial:</label
           >
           <div class="flex">
             <input
               value="R$"
-              class="w-1/6 text-center rounded-l-lg"
+              class="w-1/6 text-center rounded-l-lg h-8"
               type="text"
               disabled
             />
             <input
               type="text"
-              class="w-5/6 rounded-r-lg px-2"
+              class="w-5/6 rounded-r-lg px-2 text-emerald-950"
               id="starting-amount"
               name="starting-amount"
               placeholder="0.00"
@@ -35,20 +37,20 @@
           </div>
         </div>
         <!-- segundo -->
-        <div class="flex w-full flex-col px-4 my-2 h-[4.25rem]">
+        <div class="flex w-full flex-col px-4 md:px-0 lg:px-4 my-2 h-[4.25rem]">
           <label class="font-bold" for="additional-contribution"
             >Aportes adicionais:</label
           >
           <div class="flex">
             <input
               value="R$"
-              class="w-1/6 text-center rounded-l-lg"
+              class="w-1/6 text-center rounded-l-lg h-8"
               type="text"
               disabled
             />
             <input
               type="text"
-              class="w-5/6 rounded-r-lg px-2"
+              class="w-5/6 rounded-r-lg px-2 text-emerald-950"
               id="additional-contribution"
               name="additional-contribution"
               placeholder="0.00"
@@ -56,12 +58,12 @@
           </div>
         </div>
         <!-- terceiro -->
-        <div class="flex w-full flex-col px-4 my-2 h-[4.25rem]">
+        <div class="flex w-full flex-col px-4 md:px-0 lg:px-4 my-2 h-[4.25rem]">
           <label class="font-bold" for="time-amount">Prazo:</label>
           <div class="flex">
             <input
               type="text"
-              class="w-2/3 rounded-l-lg px-2"
+              class="w-2/3 rounded-l-lg px-2 h-8 text-emerald-950"
               id="time-amount"
               name="time-amount"
               placeholder="0"
@@ -70,7 +72,7 @@
             <select
               name=""
               id="time-amount-period"
-              class="w-1/3 text-center border-l-2 border-gray-400 rounded-r-lg hover:bg-emerald-950 hover:text-slate-200"
+              class="w-1/3 text-center border-l-2 text-emerald-950 border-gray-400 rounded-r-lg hover:bg-emerald-950 hover:text-slate-200"
             >
               <option value="monthly">Mensal</option>
               <option value="yearly">Anual</option>
@@ -78,18 +80,18 @@
           </div>
         </div>
         <!-- quarto -->
-        <div class="flex w-full flex-col px-4 my-2 h-[4.25rem]">
+        <div class="flex w-full flex-col px-4 md:px-0 lg:px-4 my-2 h-[4.25rem]">
           <label class="font-bold" for="return-rate">Rentabilidade:</label>
           <div class="flex">
             <input
               value="%"
-              class="w-1/6 text-center rounded-l-lg"
+              class="w-1/6 text-center rounded-l-lg h-8"
               type="text"
               disabled
             />
             <input
               type="text"
-              class="w-1/2 px-2"
+              class="w-1/2 px-2 text-emerald-950"
               id="return-rate"
               name="return-rate"
               placeholder="0"
@@ -98,7 +100,7 @@
             <select
               name=""
               id="evaluation-period"
-              class="w-1/3 text-center border-l-2 border-gray-400 rounded-r-lg hover:bg-emerald-950 hover:text-slate-200"
+              class="w-1/3 text-center border-l-2 border-gray-400 rounded-r-lg text-emerald-950 hover:bg-emerald-950 hover:text-slate-200"
             >
               <option value="monthly">Mensal</option>
               <option value="yearly">Anual</option>
@@ -106,18 +108,18 @@
           </div>
         </div>
         <!-- quinto -->
-        <div class="flex w-full flex-col px-4 my-2 h-[4.25rem]">
+        <div class="flex w-full flex-col px-4 md:px-0 lg:px-4 my-2 h-[4.25rem]">
           <label class="font-bold" for="tax-rate">Impostos sobre lucro:</label>
           <div class="flex">
             <input
               value="%"
-              class="w-1/6 text-center rounded-l-lg"
+              class="w-1/6 text-center rounded-l-lg h-8"
               type="text"
               disabled
             />
             <input
               type="text"
-              class="w-5/6 rounded-r-lg px-2"
+              class="w-5/6 rounded-r-lg px-2 text-emerald-950"
               id="tax-rate"
               name="tax-rate"
               placeholder="0"
@@ -126,7 +128,7 @@
           </div>
         </div>
       </form>
-      <div class="flex gap-2 w-full px-4">
+      <div class="flex gap-2 w-full md:w-4/5   px-4 md:px-0 lg:px-4">
         <button
           type="submit"
           form="investiment-form"
@@ -143,30 +145,46 @@
         </button>
       </div>
     </aside>
-    <main class="row-span-2 col-span-2 relative">
-      <button class="absolute top-0 bottom-0 left-0 cursor-pointer  w-4 bg-slate-200 opacity-50 hover:opacity-100 focus:opacity-100" id="slide-arrow-previous">&#10094;</button>
-      <button class="absolute top-0 bottom-0 right-0 cursor-pointer w-4  bg-slate-200 opacity-50 hover:opacity-100 focus:opacity-100" id="slide-arrow-next">&#10095;</button>
-      <div id="carousel" class="h-full w-full flex overflow-x-auto scroll-smooth">
+    <main class="lg:w-2/3 relative">
+      <button
+        class="absolute top-0 bottom-0 left-0 cursor-pointer w-4 bg-slate-200 opacity-50 hover:opacity-100 focus:opacity-100"
+        id="slide-arrow-previous"
+      >
+        &#10094;
+      </button>
+      <button
+        class="absolute top-0 bottom-0 right-0 cursor-pointer w-4 bg-slate-200 opacity-50 hover:opacity-100 focus:opacity-100"
+        id="slide-arrow-next"
+      >
+        &#10095;
+      </button>
+      <div
+        id="carousel"
+        class="h-dvh  flex overflow-x-auto scroll-smooth"
+      >
         <section
           id="charts-container"
-          class="h-full flex flex-col gap-3 justify-center items-center basis-full shrink-0"
+          class="flex flex-col lg:2/3 gap-3 items-center basis-full shrink-0"
         >
-          <div class="w-[22%] h-[36%] flex flex-col items-center">
+          <div class="mt-4 w-4/5 md:w-3/5 lg:w-1/4 flex flex-col items-center">
             <p class="font-bold text-lg">Resultado Final</p>
             <canvas id="final-money-distribution"></canvas>
           </div>
-          <div class="w-[65%] h-[56%] flex flex-col items-center">
+          <div class="w-5/6 md:w-11/12 xl:w-3/5  mt-4 flex flex-col items-center">
             <p class="font-bold text-lg">Progressão</p>
             <canvas id="progression"></canvas>
           </div>
         </section>
-        <section id="table-container" class="h-full overflow-y-auto basis-full shrink-0">
+        <section
+          id="table-container"
+          class="h-full overflow-y-auto basis-full shrink-0"
+        >
           <p class="font-bold text-lg text-center bg-white h-7">
             Resultados Mensais
           </p>
           <table
             id="results-table"
-            class="w-full max-h-full border border-separate"
+            class="w-3/4 md:w-full max-h-full border border-separate"
           >
             <thead></thead>
             <tbody></tbody>
